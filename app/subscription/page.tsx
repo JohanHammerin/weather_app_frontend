@@ -5,6 +5,7 @@ import { Button } from "../_components/button/button.component";
 import { Form } from "../_components/form/form.component";
 
 export default function Page() {
+  const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
   const [time, setTime] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -52,10 +53,25 @@ export default function Page() {
           className="w-full bg-white p-8 rounded-lg shadow-md space-y-6"
         >
           <section className="text-center mb-6">
-            <h1 className="text-2xl font-bold text-gray-800">Skapa konto</h1>
+            <h1 className="text-2xl font-bold text-gray-800">Create subscription</h1>
           </section>
 
           <section>
+            <label 
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Email
+            </label>
+            <input 
+              type="email" 
+              id="email" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+              placeholder="Enter your email" 
+              required 
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
             <label
               htmlFor="city"
               className="block text-sm font-medium text-gray-700 mb-2"

@@ -5,12 +5,13 @@ import { Button } from "../_components/button/button.component";
 import { Form } from "../_components/form/form.component";
 
 export default function Page() {
-  const [email, setEmail] = useState("");
+
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log({ email, password });
+    console.log({ username, password });
     // Hantera inloggning här
   };
   return (
@@ -22,23 +23,23 @@ export default function Page() {
             className="w-full bg-white p-8 rounded-lg shadow-md space-y-6"
           >
             <section className="text-center mb-6">
-              <h1 className="text-2xl font-bold text-gray-800">Skapa konto</h1>
+              <h1 className="text-2xl font-bold text-gray-800">Create account</h1>
             </section>
 
             <section>
               <label
-                htmlFor="email"
+                htmlFor="username"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
                 E-post
               </label>
               <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="username"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="din@epost.se"
+                placeholder="Enter username here"
                 required
               />
             </section>
@@ -48,7 +49,7 @@ export default function Page() {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Lösenord
+                Password
               </label>
               <input
                 type="password"
@@ -56,14 +57,15 @@ export default function Page() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Ditt lösenord"
+                placeholder="Enter password here"
                 required
               />
             </section>
 
             {/*Måste koppla till endpont för att skicka med credentielas till rätt endpoint*/}
             <section className="flex gap-5">
-              <Button title={"Skapa konto"} type="submit" />
+              <Button title={"Create account"} type="submit" />
+              <Button title={"Sign in"} type="submit"></Button>
             </section>
           </Form>
         </section>
