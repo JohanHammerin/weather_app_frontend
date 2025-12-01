@@ -11,14 +11,26 @@ export default function Page() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
+
+    setIsLoading(true)
+    setMessage("")
     
     e.preventDefault();
     console.log({ username, password });
 
-    await login({username, password});
-    router.push("/subscription")
+    try {
+        await login({username, password});
+        router.push("/subscription")
+        setMessage("Signed in successfully!")
+    } catch (err: any) {
+        setMessage(err.message || "Something went wrong");
+    } finally {
+        setIsLoading(false);
+    }
 
   };
 
@@ -72,7 +84,7 @@ export default function Page() {
 
             {/*Måste koppla till endpont för att skicka med credentielas till rätt endpoint*/}
             <section className="flex justify-center gap-5">
-              <Button title={"Sign in"} type="submit" />
+              <Button title={isLoading ? "Signing in.." : "Sign in"} type="submit" disabled={isLoading}/>
             </section>
           </Form>
         </section>

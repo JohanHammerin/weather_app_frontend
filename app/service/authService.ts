@@ -12,6 +12,13 @@ export async function login(payload: {username: string, password: string}) {
     if (!response.ok) throw new Error ("Login failed");
     return response.json().catch(()=>null);
 
+    const data = await response.json(); // CustomUserLoginResponseDTO
+    if (data?.token) {
+      localStorage.setItem("authToken", data.token);
+    }
+  
+    return data;
+
 }
 
 export async function logout(){
@@ -33,4 +40,6 @@ export async function register(payload: {username: string, password: string}) {
     })
 
     if(!response.ok) throw new Error("Logout failed")
+
+    
 }

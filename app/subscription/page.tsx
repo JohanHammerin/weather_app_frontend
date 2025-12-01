@@ -7,7 +7,7 @@ import { updateSubscription } from "../service/subscriptionService";
 
 export default function Page() {
   const [city, setCity] = useState("");
-  const [time, setTime] = useState("");
+  const [timeOfDay, setTimeOfDay] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -19,12 +19,12 @@ export default function Page() {
     try {
       await updateSubscription({
         city,
-        time,
+        timeOfDay,
       });
 
       setMessage("Subscription updated successfully!");
       setCity("");
-      setTime("");
+      setTimeOfDay("");
     } catch (err: any) {
       setMessage(err.message || "Something went wrong");
     } finally {
@@ -34,11 +34,13 @@ export default function Page() {
 
   return (
     <div className="bg-bakgrund flex justify-center items-center min-h-screen">
+      
       <section className="flex justify-center items-center flex-col w-full max-w-md">
+       
         <Form
           onSubmit={handleSubmit}
-          className="w-full bg-white p-8 rounded-lg shadow-md space-y-6"
-        >
+          className="w-full bg-white p-8 rounded-lg shadow-md space-y-6">
+          
           <section className="text-center mb-6">
             <h1 className="text-2xl font-bold text-gray-800">Create subscription</h1>
           </section>
@@ -71,8 +73,8 @@ export default function Page() {
             <input
               type="time"
               id="time"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
+              value={timeOfDay}
+              onChange={(e) => setTimeOfDay(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
@@ -81,7 +83,7 @@ export default function Page() {
           {message && (
             <section
               className={`p-3 rounded-md text-center ${
-                message.includes("framgångsrikt")
+                message.includes("successfully")
                   ? "bg-green-100 text-green-800"
                   : "bg-red-100 text-red-800"
               }`}
