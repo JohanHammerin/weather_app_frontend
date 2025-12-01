@@ -31,14 +31,14 @@ export default function Page() {
       const data = await response.json();
 
       if (response.ok) {
-        setMessage("Abbonemang uppdaterat framgångsrikt!");
+        setMessage("Subscription updated successfully!");
         setCity("");
         setTime("");
       } else {
-        setMessage(data.error || "Något gick fel");
+        setMessage(data.error || "Something went wrong");
       }
     } catch (error) {
-      setMessage("Nätverksfel, försök igen");
+      setMessage("Network error, please try again");
       console.error("Fetch error:", error);
     } finally {
       setIsLoading(false);
@@ -76,7 +76,7 @@ export default function Page() {
               htmlFor="city"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Stad
+              City
             </label>
             <input
               type="text"
@@ -84,7 +84,7 @@ export default function Page() {
               value={city}
               onChange={(e) => setCity(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Ange stad"
+              placeholder="Enter city"
               required
             />
           </section>
@@ -94,7 +94,7 @@ export default function Page() {
               htmlFor="time"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Tid för notifikation
+              Time for notification
             </label>
             <input
               type="time"
@@ -120,7 +120,7 @@ export default function Page() {
 
           <section className="flex gap-5">
             <Button
-              title={isLoading ? "Uppdaterar..." : "Uppdatera abbonemang"}
+              title={isLoading ? "Updating..." : "Update subscription"}
               type="submit"
               disabled={isLoading}
             />
