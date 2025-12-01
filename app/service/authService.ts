@@ -23,3 +23,14 @@ export async function logout(){
 
     if(!response.ok) throw new Error("Logout failed")
 }
+
+export async function register(payload: {username: string, password: string}) {
+    const response = await fetch(`${AUTH_BASE_URL}/auth/register`, {
+        method: "POST",
+        headers: {"Content-type": "application/json"},
+        credentials: "include",
+        body: JSON.stringify(payload),
+    })
+
+    if(!response.ok) throw new Error("Logout failed")
+}

@@ -3,47 +3,34 @@
 import { useState } from "react";
 import { Button } from "../_components/button/button.component";
 import { Form } from "../_components/form/form.component";
+import { updateSubscription } from "../service/subscriptionService";
 
 export default function Page() {
-  const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
   const [time, setTime] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsLoading(true);
     setMessage("");
 
     try {
-      const response = await fetch("/api/subscription/ping", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          city,
-          time,
-        }),
+      await updateSubscription({
+        city,
+        time,
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage("Subscription updated successfully!");
-        setCity("");
-        setTime("");
-      } else {
-        setMessage(data.error || "Something went wrong");
-      }
-    } catch (error) {
-      setMessage("Network error, please try again");
-      console.error("Fetch error:", error);
+      setMessage("Subscription updated successfully!");
+      setCity("");
+      setTime("");
+    } catch (err: any) {
+      setMessage(err.message || "Something went wrong");
     } finally {
       setIsLoading(false);
     }
-  };
+  }
 
   return (
     <div className="bg-bakgrund flex justify-center items-center min-h-screen">
@@ -57,21 +44,6 @@ export default function Page() {
           </section>
 
           <section>
-            <label 
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Email
-            </label>
-            <input 
-              type="email" 
-              id="email" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
-              placeholder="Enter your email" 
-              required 
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
             <label
               htmlFor="city"
               className="block text-sm font-medium text-gray-700 mb-2"
