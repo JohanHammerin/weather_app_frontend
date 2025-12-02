@@ -13,7 +13,6 @@ export function Header() {
           className="w-40 h-40"
           style={{ objectFit: "contain" }}
         />
-        <LogoutButton />
       </header>
     </>
   );

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "../_components/button/button.component";
 import { Form } from "../_components/form/form.component";
 import { updateSubscription } from "../service/subscriptionService";
+import LogoutButton from "../_components/logout/LogoutButton";
 
 export default function Page() {
   const [city, setCity] = useState("");
@@ -36,7 +37,7 @@ export default function Page() {
     <div className="bg-bakgrund flex justify-center items-center min-h-screen">
       
       <section className="flex justify-center items-center flex-col w-full max-w-md">
-       
+       <LogoutButton/>
         <Form
           onSubmit={handleSubmit}
           className="w-full bg-white p-8 rounded-lg shadow-md space-y-6">

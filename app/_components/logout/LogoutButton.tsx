@@ -15,7 +15,8 @@ export default function LogoutButton() {
         text-white 
         text-3xl 
         p-2 
-        rounded-lg hover:opacity-90">
+        rounded-lg hover:opacity-90
+        mb-8">
             Log out
         </button>
     );
