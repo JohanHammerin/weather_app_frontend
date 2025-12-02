@@ -16,12 +16,12 @@ export default function Page() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
     
     e.preventDefault();
-    console.log({ username, password });
+    console.log({ username, email, password });
 
-    await register({username, password});
+    await register({username, email, password });
     router.push("/login")
   };
-
+  
   return (
     <>
       <div className="bg-bakgrund flex justify-center items-center min-h-screen">
@@ -87,7 +87,7 @@ export default function Page() {
               />
             </section>
 
-            {/*Måste koppla till endpont för att skicka med credentielas till rätt endpoint*/}
+            
             <section className="flex gap-5">
               <Button title={"Create account"} type="submit" />
             </section>
