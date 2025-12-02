@@ -92,7 +92,7 @@ export default function Page() {
             </section>
           )}
 
-          <section className="flex gap-5">
+          <section className="flex justify-center gap-5">
             <Button
               title={isLoading ? "Updating..." : "Update subscription"}
               type="submit"
