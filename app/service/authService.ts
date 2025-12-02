@@ -20,14 +20,8 @@ export async function login(payload: {username: string, password: string}) {
 
 }
 
-export async function logout(){
-    const response = await fetch(`${AUTH_BASE_URL}/auth/logout`, {
-        method: "POST",
-        headers: {"Content-type": "application/json"},
-        credentials: "include",
-    })
-
-    if(!response.ok) throw new Error("Logout failed")
+export function logout() {
+    localStorage.removeItem("authToken");
 }
 
 export async function register(payload: {username: string, password: string}) {
