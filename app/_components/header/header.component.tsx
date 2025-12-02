@@ -1,4 +1,5 @@
 import Image from "next/image";
+import LogoutButton from "../logout/LogoutButton";
 
 export function Header() {
   return (
@@ -12,6 +13,7 @@ export function Header() {
           className="w-40 h-40"
           style={{ objectFit: "contain" }}
         />
+        <LogoutButton />
       </header>
     </>
   );
