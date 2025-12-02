@@ -3,56 +3,46 @@
 import { useState } from "react";
 import { Button } from "../_components/button/button.component";
 import { Form } from "../_components/form/form.component";
+import { updateSubscription } from "../service/subscriptionService";
 
 export default function Page() {
   const [city, setCity] = useState("");
-  const [time, setTime] = useState("");
+  const [timeOfDay, setTimeOfDay] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsLoading(true);
     setMessage("");
 
     try {
-      const response = await fetch("/api/subscription/ping", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          city,
-          time,
-        }),
+      await updateSubscription({
+        city,
+        timeOfDay,
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage("Abbonemang uppdaterat framgångsrikt!");
-        setCity("");
-        setTime("");
-      } else {
-        setMessage(data.error || "Något gick fel");
-      }
-    } catch (error) {
-      setMessage("Nätverksfel, försök igen");
-      console.error("Fetch error:", error);
+      setMessage("Subscription updated successfully!");
+      setCity("");
+      setTimeOfDay("");
+    } catch (err: any) {
+      setMessage(err.message || "Something went wrong");
     } finally {
       setIsLoading(false);
     }
-  };
+  }
 
   return (
     <div className="bg-bakgrund flex justify-center items-center min-h-screen">
+      
       <section className="flex justify-center items-center flex-col w-full max-w-md">
+       
         <Form
           onSubmit={handleSubmit}
-          className="w-full bg-white p-8 rounded-lg shadow-md space-y-6"
-        >
+          className="w-full bg-white p-8 rounded-lg shadow-md space-y-6">
+          
           <section className="text-center mb-6">
-            <h1 className="text-2xl font-bold text-gray-800">Skapa konto</h1>
+            <h1 className="text-2xl font-bold text-gray-800">Create subscription</h1>
           </section>
 
           <section>
@@ -60,7 +50,7 @@ export default function Page() {
               htmlFor="city"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Stad
+              City
             </label>
             <input
               type="text"
@@ -68,7 +58,7 @@ export default function Page() {
               value={city}
               onChange={(e) => setCity(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Ange stad"
+              placeholder="Enter city"
               required
             />
           </section>
@@ -78,13 +68,13 @@ export default function Page() {
               htmlFor="time"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Tid för notifikation
+              Time for notification
             </label>
             <input
               type="time"
               id="time"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
+              value={timeOfDay}
+              onChange={(e) => setTimeOfDay(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
@@ -93,7 +83,7 @@ export default function Page() {
           {message && (
             <section
               className={`p-3 rounded-md text-center ${
-                message.includes("framgångsrikt")
+                message.includes("successfully")
                   ? "bg-green-100 text-green-800"
                   : "bg-red-100 text-red-800"
               }`}
@@ -102,9 +92,9 @@ export default function Page() {
             </section>
           )}
 
-          <section className="flex gap-5">
+          <section className="flex justify-center gap-5">
             <Button
-              title={isLoading ? "Uppdaterar..." : "Uppdatera abbonemang"}
+              title={isLoading ? "Updating..." : "Update subscription"}
               type="submit"
               disabled={isLoading}
             />
