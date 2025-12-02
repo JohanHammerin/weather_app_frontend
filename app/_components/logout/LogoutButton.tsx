@@ -1,3 +1,4 @@
+'use client'
 import { logout } from "../../service/authService";
 import { useRouter } from "next/navigation";
 
@@ -10,7 +11,12 @@ export default function LogoutButton() {
     }
 
     return (
-        <button onClick={handleLogout} className="btn">
+        <button onClick={handleLogout} className=" bg-button-blue 
+        text-white 
+        text-3xl 
+        p-2 
+        rounded-lg hover:opacity-90
+        mb-8">
             Log out
         </button>
     );

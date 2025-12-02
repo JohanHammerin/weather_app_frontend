@@ -1,4 +1,5 @@
 import Image from "next/image";
+import LogoutButton from "../logout/LogoutButton";
 
 export function Header() {
   return (
