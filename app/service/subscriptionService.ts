@@ -16,7 +16,6 @@ export async function updateSubscription(payload: UpdateSubscriptionPayload) {
       "Content-Type": "application/json",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
-    credentials: "include",
     body: JSON.stringify(payload),
   });
 
