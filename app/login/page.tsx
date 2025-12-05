@@ -20,12 +20,11 @@ export default function Page() {
     setMessage("")
     
     e.preventDefault();
-    console.log({ username, password });
 
     try {
         await login({username, password});
+        setMessage("Logged in successfully!")
         router.push("/subscription")
-        setMessage("Signed in successfully!")
     } catch (err: any) {
         setMessage(err.message || "Something went wrong");
     } finally {
@@ -54,8 +53,9 @@ export default function Page() {
                 Username
               </label>
               <input
-                type="username"
+                type="text"
                 id="username"
+                autoComplete="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -82,7 +82,18 @@ export default function Page() {
               />
             </section>
 
-            {/*Måste koppla till endpont för att skicka med credentielas till rätt endpoint*/}
+            {message && (
+            <section
+              className={`p-3 rounded-md text-center ${
+                message.includes("successfully")
+                  ? "bg-green-100 text-green-800"
+                  : "bg-red-100 text-red-800"
+              }`}
+            >
+              {message}
+            </section>
+          )}
+
             <section className="flex justify-center gap-5">
               <Button title={isLoading ? "Signing in.." : "Sign in"} type="submit" disabled={isLoading}/>
             </section>

@@ -12,14 +12,25 @@ export default function Page() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
     
     e.preventDefault();
-    console.log({ username, email, password });
+    setIsLoading(true)
+    setMessage("");
 
-    await register({username, email, password });
-    router.push("/login")
+    try {
+      await register({username, email, password });
+      setMessage("Created new account successfully!")
+      router.push("/login")
+    } catch (err: any){
+      setMessage(err.message || "Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
+
   };
   
   return (
@@ -42,8 +53,9 @@ export default function Page() {
                 Username
               </label>
               <input
-                type="username"
+                type="text"
                 id="username"
+                autoComplete="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -64,7 +76,7 @@ export default function Page() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter username here"
+                placeholder="Enter email here"
                 required
               />
             </section>
@@ -87,9 +99,20 @@ export default function Page() {
               />
             </section>
 
+            {message && (
+            <section
+              className={`p-3 rounded-md text-center ${
+                message.includes("successfully")
+                  ? "bg-green-100 text-green-800"
+                  : "bg-red-100 text-red-800"
+              }`}
+            >
+              {message}
+            </section>
+          )}
             
-            <section className="flex gap-5">
-              <Button title={"Create account"} type="submit" />
+            <section className="flex justify-center gap-5">
+              <Button title={isLoading ? "Creating account..": "Create account"} type="submit" disabled= {isLoading} />
             </section>
           </Form>
         </section>
