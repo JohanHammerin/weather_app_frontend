@@ -12,14 +12,26 @@ export default function Page() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
     
+    setIsLoading(true)
+
     e.preventDefault();
     console.log({ username, email, password });
 
-    await register({username, email, password });
-    router.push("/login")
+
+
+    try {
+      await register({username, email, password });
+      router.push("/login")
+    } catch (err: any){
+
+    } finally {
+      setIsLoading(false);
+    }
+
   };
   
   return (
@@ -89,7 +101,7 @@ export default function Page() {
 
             
             <section className="flex gap-5">
-              <Button title={"Create account"} type="submit" />
+              <Button title={isLoading ? "Creating account..": "Create account"} type="submit" disabled= {isLoading} />
             </section>
           </Form>
         </section>
