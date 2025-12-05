@@ -13,6 +13,7 @@ export default function Page() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
     
@@ -25,9 +26,10 @@ export default function Page() {
 
     try {
       await register({username, email, password });
+      setMessage("Created new account successfully!")
       router.push("/login")
     } catch (err: any){
-
+      setMessage(err.message || "Something went wrong");
     } finally {
       setIsLoading(false);
     }
@@ -99,8 +101,19 @@ export default function Page() {
               />
             </section>
 
+            {message && (
+            <section
+              className={`p-3 rounded-md text-center ${
+                message.includes("successfully")
+                  ? "bg-green-100 text-green-800"
+                  : "bg-red-100 text-red-800"
+              }`}
+            >
+              {message}
+            </section>
+          )}
             
-            <section className="flex gap-5">
+            <section className="flex justify-center gap-5">
               <Button title={isLoading ? "Creating account..": "Create account"} type="submit" disabled= {isLoading} />
             </section>
           </Form>
