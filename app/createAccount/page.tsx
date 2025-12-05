@@ -17,9 +17,9 @@ export default function Page() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
     
-    setIsLoading(true)
-
     e.preventDefault();
+    setIsLoading(true)
+    setMessage("");
 
     try {
       await register({username, email, password });
@@ -53,8 +53,9 @@ export default function Page() {
                 Username
               </label>
               <input
-                type="username"
+                type="text"
                 id="username"
+                autoComplete="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
