@@ -24,8 +24,8 @@ export default function Page() {
 
     try {
         await login({username, password});
+        setMessage("Logged in successfully!")
         router.push("/subscription")
-        setMessage("Signed in successfully!")
     } catch (err: any) {
         setMessage(err.message || "Something went wrong");
     } finally {
@@ -82,7 +82,18 @@ export default function Page() {
               />
             </section>
 
-            {/*Måste koppla till endpont för att skicka med credentielas till rätt endpoint*/}
+            {message && (
+            <section
+              className={`p-3 rounded-md text-center ${
+                message.includes("successfully")
+                  ? "bg-green-100 text-green-800"
+                  : "bg-red-100 text-red-800"
+              }`}
+            >
+              {message}
+            </section>
+          )}
+
             <section className="flex justify-center gap-5">
               <Button title={isLoading ? "Signing in.." : "Sign in"} type="submit" disabled={isLoading}/>
             </section>
