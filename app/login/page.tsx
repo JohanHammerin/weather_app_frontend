@@ -20,7 +20,6 @@ export default function Page() {
     setMessage("")
     
     e.preventDefault();
-    console.log({ username, password });
 
     try {
         await login({username, password});

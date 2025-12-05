@@ -28,7 +28,6 @@ export async function register(payload: {
   email: string;
   password: string;
 }) {
-  console.log("Registering user with payload:", payload);
   
   try {
     const response = await fetch(`${AUTH_BASE_URL}/auth/register`, {
@@ -37,12 +36,7 @@ export async function register(payload: {
       body: JSON.stringify(payload),
     });
 
-    console.log("Response status:", response.status);
-    console.log("Response headers:", response.headers);
-    
-    
     const responseText = await response.text();
-    console.log("Raw response text:", responseText);
 
     if (!response.ok) {
       let errorMessage = `Registration failed (Status: ${response.status})`;
@@ -57,7 +51,7 @@ export async function register(payload: {
           errorMessage = responseText || errorMessage;
         }
       } catch (parseError) {
-        console.error("Could not parse response:", parseError);
+
         errorMessage = responseText || errorMessage;
       }
       

@@ -20,9 +20,6 @@ export default function Page() {
     setIsLoading(true)
 
     e.preventDefault();
-    console.log({ username, email, password });
-
-
 
     try {
       await register({username, email, password });
